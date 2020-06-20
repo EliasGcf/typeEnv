@@ -48,8 +48,7 @@
   },
   "repository": "EliasGcf/typeEnv",
   "scripts": {
-    "prepack": "rm -rf lib && tsc -b && oclif-dev readme && if [ -e ./src/envTypeTemplate.hbs ]; then cp -a ./src/envTypeTemplate.hbs ./lib/; fi",
-    "version": "oclif-dev readme && git add README.md"
+    "prepack": "rm -rf lib && tsc -b && if [ -e ./src/envTypeTemplate.hbs ]; then cp -a ./src/envTypeTemplate.hbs ./lib/; fi"
   },
   "types": "lib/index.d.ts"
 }
