@@ -1,0 +1,55 @@
+{
+  "name": "@eliasgcf/type-env",
+  "description": "create a .d.ts file to your .env file",
+  "version": "0.0.6",
+  "author": "Elias Gabriel @EliasGcf",
+  "bin": {
+    "typeEnv": "./bin/run"
+  },
+  "bugs": "https://github.com/EliasGcf/typeEnv/issues",
+  "dependencies": {
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "chalk": "^4.1.0",
+    "dotenv": "^8.2.0",
+    "handlebars": "^4.7.6",
+    "tslib": "^1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@types/node": "^10",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-prettier": "^3.1.3",
+    "prettier": "^2.0.5",
+    "ts-node": "^8",
+    "typescript": "^3.3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "homepage": "https://github.com/EliasGcf/typeEnv",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "oclif": {
+    "bin": "typeEnv"
+  },
+  "repository": "EliasGcf/typeEnv",
+  "scripts": {
+    "prepack": "rm -rf lib && tsc -b && oclif-dev readme && if [ -e ./src/envTypeTemplate.hbs ]; then cp -a ./src/envTypeTemplate.hbs ./lib/; fi",
+    "version": "oclif-dev readme && git add README.md"
+  },
+  "types": "lib/index.d.ts"
+}
