@@ -39,10 +39,10 @@ class TypeEnv extends Command {
     try {
       const { flags: myFlags } = this.parse(TypeEnv);
       const { path, file } = myFlags;
+      const envFile = await fs.readFile(`${file}`, { encoding: 'utf8' });
 
       this.log(chalk.green('Creating the .d.ts for your env file'));
 
-      const envFile = await fs.readFile(`${file}`, { encoding: 'utf8' });
       const parsedEnv = dotenv.parse(envFile);
       const variables = Object.keys(parsedEnv);
 
@@ -58,7 +58,7 @@ class TypeEnv extends Command {
 
       this.log(chalk.green('Finished 🚀'));
     } catch (err) {
-      this.error(err.message);
+      this.warn(err.message);
     }
   }
 }
