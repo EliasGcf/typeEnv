@@ -27,6 +27,12 @@ class TypeEnv extends Command {
       default: '.env',
     }),
 
+    show: flags.boolean({
+      char: 's',
+      description: 'not create the .d.ts file and show in terminal the results',
+      default: false,
+    }),
+
     version: flags.version({ char: 'v' }),
   };
 
@@ -38,10 +44,11 @@ class TypeEnv extends Command {
   async run(): Promise<void> {
     try {
       const { flags: myFlags } = this.parse(TypeEnv);
-      const { path, file } = myFlags;
+      const { path, file, show } = myFlags;
+
       const envFile = await fs.readFile(`${file}`, { encoding: 'utf8' });
 
-      this.log(chalk.green('Creating the .d.ts for your env file'));
+      if (!show) this.log(chalk.green('Creating the .d.ts for your env file'));
 
       const parsedEnv = dotenv.parse(envFile);
       const variables = Object.keys(parsedEnv);
@@ -52,6 +59,11 @@ class TypeEnv extends Command {
       });
 
       const source = Handlebars.compile(sourceTemplate)({ variables });
+
+      if (show) {
+        this.log(source);
+        return;
+      }
 
       await fs.mkdir(`${path}`, { recursive: true });
       await fs.writeFile(`${path}/env.d.ts`, source);

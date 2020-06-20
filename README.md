@@ -18,7 +18,7 @@ $ npm install -g @eliasgcf/type-env
 $ typeEnv COMMAND
 running command...
 $ typeEnv (-v|--version|version)
-@eliasgcf/type-env/0.0.6 darwin-x64 node-v12.16.3
+@eliasgcf/type-env/0.0.7 darwin-x64 node-v12.16.3
 $ typeEnv --help [COMMAND]
 USAGE
   $ typeEnv COMMAND
