@@ -47,11 +47,14 @@ class TypeEnv extends Command {
       const { path, file, show } = myFlags;
 
       const envFile = await fs.readFile(`${file}`, { encoding: 'utf8' });
-
-      if (!show) this.log(chalk.green('Creating the .d.ts for your env file'));
-
       const parsedEnv = dotenv.parse(envFile);
       const variables = Object.keys(parsedEnv);
+
+      if (variables.length === 0) {
+        throw Error(`Your '${file}' file is empty`);
+      }
+
+      if (!show) this.log(chalk.green('Creating the .d.ts for your env file'));
 
       const pathTemplate = resolve(__dirname, 'envTypeTemplate.hbs');
       const sourceTemplate = await fs.readFile(pathTemplate, {
