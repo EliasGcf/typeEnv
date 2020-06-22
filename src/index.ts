@@ -55,9 +55,11 @@ class TypeEnv extends Command {
       const { flags: myFlags } = this.parse(TypeEnv);
       const { path, file, show, config } = myFlags;
 
-      if (config) {
+      if (config === 'js' || config === 'ts') {
         this.log(
-          chalk.green(`Put this config in your ${config}config.json:\n`),
+          chalk.greenBright(
+            `\n⚡ You will increase this setting in your '${config}config.json' file!\n`,
+          ),
         );
         this.log(await showConfig(config));
         return;
@@ -65,30 +67,41 @@ class TypeEnv extends Command {
 
       const envFile = await fs.readFile(`${file}`, { encoding: 'utf8' });
       const parsedEnv = dotenv.parse(envFile);
-      const variables = Object.keys(parsedEnv);
+      const variablesEnvFile = Object.keys(parsedEnv);
 
-      if (variables.length === 0) {
-        throw Error(`Your '${file}' file is empty`);
+      if (variablesEnvFile.length === 0) {
+        this.log(chalk.redBright(`\n❌ Your file '${file}' is empty!\n`));
+        this.log(chalk.white(`Example in your file: NAME_VARIABLE=VALUE\n`));
+        return;
       }
 
-      if (!show) this.log(chalk.green('Creating the .d.ts for your env file'));
+      if (!show) {
+        this.log(
+          chalk.greenBright(
+            '\n⛏  Creating the type definition for your .env file!',
+          ),
+        );
+      }
 
       const pathTemplate = resolve(__dirname, 'views', 'envTypeTemplate.hbs');
       const sourceTemplate = await fs.readFile(pathTemplate, {
         encoding: 'utf8',
       });
 
-      const source = Handlebars.compile(sourceTemplate)({ variables });
+      const source = Handlebars.compile(sourceTemplate)({
+        variables: variablesEnvFile,
+      });
 
       if (show) {
-        this.log(source);
+        this.log(chalk.greenBright('\n✔  Show declare of your variables!\n'));
+        this.log(chalk.yellow(source));
         return;
       }
 
       await fs.mkdir(`${path}`, { recursive: true });
       await fs.writeFile(`${path}/env.d.ts`, source);
 
-      this.log(chalk.green('Finished 🚀'));
+      this.log(chalk.greenBright('\n🚀 Done!\n'));
     } catch (err) {
       if (err.code !== 'EEXIT') {
         this.warn(err.message);
