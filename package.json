@@ -3,6 +3,12 @@
   "description": "create a .d.ts file to your .env file",
   "version": "0.0.10",
   "author": "Elias Gabriel @EliasGcf",
+  "contributors": [
+    {
+      "name": "Daniel Felizardo",
+      "url": "https://github.com/danieldfc"
+    }
+  ],
   "bin": {
     "typeEnv": "./bin/run"
   },
@@ -17,16 +23,22 @@
     "tslib": "^1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^9.0.1",
+    "@commitlint/config-conventional": "^9.0.1",
     "@oclif/dev-cli": "^1",
     "@types/node": "^10",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
+    "commitizen": "^4.1.2",
+    "cz-conventional-changelog": "3.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.3",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
     "ts-node": "^8",
     "typescript": "^3.3"
@@ -54,5 +66,10 @@
   "scripts": {
     "prepack": "rm -rf lib && tsc -b && if [ -e ./src/views ]; then cp -a ./src/views ./lib/; fi"
   },
-  "types": "lib/index.d.ts"
+  "types": "lib/index.d.ts",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
