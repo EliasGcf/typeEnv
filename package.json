@@ -1,7 +1,7 @@
 {
   "name": "@eliasgcf/type-env",
   "description": "create a .d.ts file to your .env file",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "author": "Elias Gabriel @EliasGcf",
   "bin": {
     "typeEnv": "./bin/run"
@@ -52,7 +52,7 @@
   },
   "repository": "EliasGcf/typeEnv",
   "scripts": {
-    "prepack": "rm -rf lib && tsc -b && if [ -e ./src/envTypeTemplate.hbs ]; then cp -a ./src/envTypeTemplate.hbs ./lib/; fi"
+    "prepack": "rm -rf lib && tsc -b && if [ -e ./src/views ]; then cp -a ./src/views ./lib/; fi"
   },
   "types": "lib/index.d.ts"
 }

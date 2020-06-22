@@ -1,0 +1,5 @@
+{
+  "typeAcquisition": {
+    "include": ["./src/@types/env.d.ts"]
+  }
+}

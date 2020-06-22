@@ -5,6 +5,8 @@ import * as dotenv from 'dotenv';
 import chalk from 'chalk';
 import { resolve } from 'path';
 
+import showConfig from './utils/showConfig';
+
 class TypeEnv extends Command {
   static description = 'create a .d.ts file to your .env file';
 
@@ -33,18 +35,33 @@ class TypeEnv extends Command {
       default: false,
     }),
 
+    config: flags.enum({
+      char: 'c',
+      options: ['ts', 'js'],
+      description: 'show the config to put in (tsconfig.json|jsconfig.json)',
+    }),
+
     version: flags.version({ char: 'v' }),
   };
 
   static examples = [
     '$ typeEnv --path=src/@types',
     '$ typeEnv --file .env.prod',
+    '$ typeEnv -c ts',
   ];
 
   async run(): Promise<void> {
     try {
       const { flags: myFlags } = this.parse(TypeEnv);
-      const { path, file, show } = myFlags;
+      const { path, file, show, config } = myFlags;
+
+      if (config) {
+        this.log(
+          chalk.green(`Put this config in your ${config}config.json:\n`),
+        );
+        this.log(await showConfig(config));
+        return;
+      }
 
       const envFile = await fs.readFile(`${file}`, { encoding: 'utf8' });
       const parsedEnv = dotenv.parse(envFile);
@@ -56,7 +73,7 @@ class TypeEnv extends Command {
 
       if (!show) this.log(chalk.green('Creating the .d.ts for your env file'));
 
-      const pathTemplate = resolve(__dirname, 'envTypeTemplate.hbs');
+      const pathTemplate = resolve(__dirname, 'views', 'envTypeTemplate.hbs');
       const sourceTemplate = await fs.readFile(pathTemplate, {
         encoding: 'utf8',
       });
@@ -73,7 +90,9 @@ class TypeEnv extends Command {
 
       this.log(chalk.green('Finished 🚀'));
     } catch (err) {
-      this.warn(err.message);
+      if (err.code !== 'EEXIT') {
+        this.warn(err.message);
+      }
     }
   }
 }
