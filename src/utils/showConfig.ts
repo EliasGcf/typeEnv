@@ -1,17 +1,16 @@
 import { promises as fs } from 'fs';
 import { resolve } from 'path';
+import chalk from 'chalk';
 
-export default async function showConfig(config: string): Promise<string> {
-  if (config === 'js') {
-    const jsConfig = await fs.readFile(
-      resolve(__dirname, '..', 'views', 'jsConfig.txt'),
-      { encoding: 'utf8' },
-    );
-    return jsConfig;
-  }
-  const tsConfig = await fs.readFile(
-    resolve(__dirname, '..', 'views', 'tsConfig.txt'),
-    { encoding: 'utf8' },
+type ConfigTypes = 'js' | 'ts';
+
+export default async function showConfig(config: ConfigTypes): Promise<string> {
+  const contentFile = await fs.readFile(
+    resolve(__dirname, '..', 'views', `${config}Config.txt`),
+    {
+      encoding: 'utf8',
+    },
   );
-  return tsConfig;
+
+  return `${chalk.yellow(contentFile)}\n`;
 }
