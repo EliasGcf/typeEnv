@@ -1,7 +1,7 @@
 {
   "name": "@eliasgcf/type-env",
   "description": "create a .d.ts file to your .env file",
-  "version": "0.0.10",
+  "version": "1.0.0",
   "author": "Elias Gabriel @EliasGcf",
   "contributors": [
     {
