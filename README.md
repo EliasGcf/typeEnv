@@ -69,6 +69,10 @@ typeEnv --file .other.env
 typeEnv --show
 ```
 
+### Config
+
+> Now you can verify 
+
 ## 🤔 How to contribute
 
 **Make a fork of this repository**
