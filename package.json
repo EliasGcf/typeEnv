@@ -1,7 +1,7 @@
 {
   "name": "@eliasgcf/type-env",
   "description": "create a .d.ts file to your .env file",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "author": "Elias Gabriel @EliasGcf",
   "bin": {
     "typeEnv": "./bin/run"
