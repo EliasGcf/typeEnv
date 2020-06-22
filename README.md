@@ -39,14 +39,14 @@ $ yarn global add @eliasgcf/type-env
 $ npm install -g @eliasgcf/type-env
 ```
 
-## Usage
+## ⚡ Usage
 
 ### Path
 
 > create the env.d.ts inside another folder: --path/-p
 
 ```bash
-typeEnv --path=src/my-types
+$ typeEnv --path=src/my-types
 ```
 
 ---
@@ -56,7 +56,7 @@ typeEnv --path=src/my-types
 > change the default env file (.env): --file/-f
 
 ```bash
-typeEnv --file .other.env
+$ typeEnv --file .other.env
 ```
 
 ---
@@ -66,12 +66,18 @@ typeEnv --file .other.env
 > just show the results and not create the d.ts file: --show/-s
 
 ```bash
-typeEnv --show
+$ typeEnv --show
 ```
 
 ### Config
 
-> Now you can verify 
+> You can now check the settings for each environment, be it with typescript or javascript.
+
+```bash
+$ typeEnv -c ts
+# or
+$ typeEnv -c js
+```
 
 ## 🤔 How to contribute
 
