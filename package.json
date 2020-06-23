@@ -16,6 +16,7 @@
   "dependencies": {
     "@oclif/command": "^1",
     "@oclif/config": "^1",
+    "@oclif/errors": "^1.2.2",
     "@oclif/plugin-warn-if-update-available": "^1.7.0",
     "chalk": "^4.1.0",
     "dotenv": "^8.2.0",

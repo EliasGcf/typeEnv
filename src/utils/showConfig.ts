@@ -1,10 +1,24 @@
+import { Command } from '@oclif/command';
 import { promises as fs } from 'fs';
 import { resolve } from 'path';
 import chalk from 'chalk';
 
 type ConfigTypes = 'js' | 'ts';
 
-export default async function showConfig(config: ConfigTypes): Promise<string> {
+interface Methods {
+  log: Command['log'];
+}
+
+export default async function showConfig(
+  config: ConfigTypes,
+  methods: Methods,
+): Promise<boolean> {
+  methods.log(
+    chalk.greenBright(
+      `\n⚡ You will increase this setting in your '${config}config.json' file!\n`,
+    ),
+  );
+
   const contentFile = await fs.readFile(
     resolve(__dirname, '..', 'views', `${config}Config.txt`),
     {
@@ -12,5 +26,6 @@ export default async function showConfig(config: ConfigTypes): Promise<string> {
     },
   );
 
-  return `${chalk.yellow(contentFile)}\n`;
+  methods.log(`${chalk.yellow(contentFile)}\n`);
+  return true;
 }
