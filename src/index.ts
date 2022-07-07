@@ -41,6 +41,12 @@ class TypeEnv extends Command {
       description: 'show the config to put in (tsconfig.json|jsconfig.json)',
     }),
 
+    required: flags.boolean({
+      char: 'r',
+      default: false,
+      description: 'Remove the ? from the type definition',
+    }),
+
     version: flags.version({ char: 'v' }),
   };
 
@@ -53,7 +59,7 @@ class TypeEnv extends Command {
   async run(): Promise<void> {
     try {
       const { flags: myFlags } = this.parse(TypeEnv);
-      const { path, file, show, config } = myFlags;
+      const { path, file, show, config, required } = myFlags;
 
       if (config === 'js' || config === 'ts') {
         this.log(
@@ -83,7 +89,11 @@ class TypeEnv extends Command {
         );
       }
 
-      const pathTemplate = resolve(__dirname, 'views', 'envTypeTemplate.hbs');
+      const templateFileName = required
+        ? 'envTypeTemplateWithout?.hbs'
+        : 'envTypeTemplate.hbs';
+
+      const pathTemplate = resolve(__dirname, 'views', templateFileName);
       const sourceTemplate = await fs.readFile(pathTemplate, {
         encoding: 'utf8',
       });
